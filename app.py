@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from py_backend.logger.log_db import Logger
 from py_backend.mongo_db.crud import Operations
 from py_backend.signup.signup_user import Registration
+from py_backend.login.login_user import Validation
 import config
 
 app = Flask(__name__)
@@ -17,6 +18,15 @@ def home_page():
 @app.route('/auth/login', methods=['GET', 'POST'])
 def login_page():
     return render_template('login.html')
+
+
+@app.route('/auth/login-user', methods=['GET', 'POST'])
+def login_page():
+    if request.method == "POST":
+        email = request.form["Email"]
+        password = request.form["Password"]
+        res = Validation(email, password).check
+        return res
 
 
 @app.route('/auth/signup', methods=['GET', 'POST'])
