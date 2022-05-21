@@ -11,7 +11,7 @@ config.mongo_db = Operations("ExamPortal", config.logger)
 
 @app.route('/', methods=['GET', 'POST'])
 def home_page():
-    return render_template('login.html')
+    return render_template('Home.html')
 
 
 @app.route('/auth/login', methods=['GET', 'POST'])
