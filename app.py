@@ -14,6 +14,16 @@ def home_page():
     return render_template('login.html')
 
 
+@app.route('/auth/login', methods=['GET', 'POST'])
+def login_page():
+    return render_template('login.html')
+
+
+@app.route('/auth/signup', methods=['GET', 'POST'])
+def signup_page():
+    return render_template('Registration.html')
+
+
 @app.route('/auth/registration', methods=['GET', 'POST'])
 def registration():
     if request.method == "POST":
