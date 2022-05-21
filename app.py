@@ -16,9 +16,12 @@ def home_page():
 @app.route('/auth/registration', methods=['GET', 'POST'])
 def registration():
     if request.method == "POST":
-        record = request.form
-        print(record)
+        first = request.form["First Name"]
+        last = request.form["Last Name"]
+        email = request.form["Email"]
+
     return "Registration Successful"
+
 
 if __name__ == '__main__':
     config.logger.log("INFO", "App starting")
