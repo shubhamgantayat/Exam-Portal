@@ -19,19 +19,19 @@ class Validation:
         try:
             if self.email is not None and self.password is not None:
                 self.email = self.email.lower()
-                result = config.mongo_db.my_db['User'].find({"email": self.email})[0]
+                result = config.mongo_db.my_db['users'].find({"email": self.email})[0]
                 if result is None:
                     config.logger.log("CRITICAL", "Invalid Credentials")
-                    return {"role": False, "message": "Invalid Credentials", "token": None}
+                    return {"status": False, "message": "Invalid Credentials", "token": None}
                 else:
                     if check_password_hash(result['password'], self.password):
                         config.logger.log("INFO", "Login successful...")
-                        return {"result": result, "message": "Login successful"}
+                        return {"status": True, "result": result["firstname"] + " " + result["lastname"], "message": "Login successful"}
                     else:
                         config.logger.log("WARNING", "Wrong password...")
-                        return {"role": False, "message": "Wrong password"}
+                        return {"status": False, "message": "Wrong password"}
             else:
-                return {"role": False, "message": "Please enter an email and password to log in"}
+                return {"status": False, "message": "Please enter an email and password to log in"}
         except Exception as e:
             config.logger.log("ERROR", str(e))
-            return {"role": False, "message": "Internal Server Error"}
+            return {"status": False, "message": "Internal Server Error"}

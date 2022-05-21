@@ -21,11 +21,11 @@ def login_page():
 
 
 @app.route('/auth/login-user', methods=['GET', 'POST'])
-def login_page():
+def login():
     if request.method == "POST":
         email = request.form["Email"]
         password = request.form["Password"]
-        res = Validation(email, password).check
+        res = Validation(email, password).check()
         return res
 
 
