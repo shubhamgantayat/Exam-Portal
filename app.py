@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from py_backend.logger.log_db import Logger
 from py_backend.mongo_db.crud import Operations
+from py_backend.signup.signup_user import Registration
 import config
 
 app = Flask(__name__)
@@ -16,11 +17,14 @@ def home_page():
 @app.route('/auth/registration', methods=['GET', 'POST'])
 def registration():
     if request.method == "POST":
-        first = request.form["First Name"]
-        last = request.form["Last Name"]
-        email = request.form["Email"]
-
-    return "Registration Successful"
+        record = request.form
+        password = request.form["Password"]
+        confirm_password = request.form["Confirm Password"]
+        if password == confirm_password:
+            res = Registration(record).insert_to_db()
+            return res
+        else:
+            return {"status": False, "message": "Password does not match"}
 
 
 if __name__ == '__main__':
